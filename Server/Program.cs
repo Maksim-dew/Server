@@ -11,7 +11,7 @@ namespace ClientServer
     {
         static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration().WriteTo.File(@"C:\Users\maksi\source\repos\Server\FileLog.log").CreateLogger();
+            Log.Logger = new LoggerConfiguration().WriteTo.File("FileLog.log").CreateLogger();
 
             Log.Information("The is a sample information");
 
