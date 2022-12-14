@@ -2,6 +2,8 @@
 using System.Text;
 using System.Net.Sockets;
 using System.Net;
+using Serilog;
+using Serilog.Core;
 
 namespace ClientServer
 {
@@ -9,6 +11,10 @@ namespace ClientServer
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.File(@"C:\Users\maksi\source\repos\Server\FileLog.log").CreateLogger();
+
+            Log.Information("The is a sample information");
+
             try
             {
                 TcpListener serverSocket = new TcpListener(IPAddress.Any, 7000);
@@ -37,11 +43,17 @@ namespace ClientServer
                 serverSocket.Stop();
                 Console.WriteLine("Server stopped");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(ex.Message);
+
+                Log.Error(ex, "Some error occurred");
             }
             Console.ReadLine();
+
+            Log.CloseAndFlush();
+            Console.WriteLine("Completed");
+            Console.ReadKey();
         }
     }
 }
